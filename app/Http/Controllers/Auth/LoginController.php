@@ -40,6 +40,16 @@ class LoginController extends Controller
 
     public function username()
     {
-        return 'email';
+        $value = request()->input('identify');  //identifyبجيب الي نكتب في input الي اسمها
+
+        //لو القيمة هاد ايميل خيرجعلي ايميل لو مش ايميل هتكون موبايل
+
+        $filed = filter_var($value,FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+
+        //هضيفها للريكويست وبيكون اراي
+
+        request()->merge([$filed => $value]);
+
+        return $filed;
     }
 }
